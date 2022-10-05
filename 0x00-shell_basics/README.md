@@ -1,1 +1,1 @@
-My second readme.md
+absolute path name of the current working directory
