@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "I will be using this current directory as my working directory because it is my current working directory, this is so cool!"
+echo "/0-current_working_directory/root/alx-system_engineering-devops/0x00-shell_basics"
