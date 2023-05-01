@@ -5,6 +5,8 @@
 sudo apt-get update
 sudo apt-get install -y nginx
 
+mkdir -p /var/www/html
+
 string1="error_page 404 \/custom_404.html;\n location \/redirect_me {\n return 301 \$scheme:\/\/www.google.com;"
 string2="server {\n\tadd_header X-Served-By $var;"
 
@@ -14,8 +16,6 @@ echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
 sudo sed -i -E "s/^[^#]+location \/ \{/$string1/" /etc/nginx/sites-available/default
 sudo sed -i -E "s/^server \{/$string2/" /etc/nginx/sites-available/default
 
-
-# HTTP response contains a custom header (on web-01 and web-02)
 var=$(hostname)
 
 # restart the server
