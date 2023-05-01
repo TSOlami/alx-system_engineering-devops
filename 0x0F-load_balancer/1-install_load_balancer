@@ -3,8 +3,8 @@
 # Install and configure HAProxy load balancer on your lb-01 server.
 sudo apt-get update 
 sudo apt-get install --no-install-recommends software-properties-common
-sudo add-apt-repository ppa:vbernat/haproxy-2.7
-sudo apt-get install haproxy=2.7.\*
+sudo add-apt-repository ppa:vbernat/haproxy-2.0
+sudo apt-get install haproxy=2.0.\*
 
 # Code to enable load balancer
 sudo sed -i "8 a\ENABLED=1\n" /etc/default/haproxy
