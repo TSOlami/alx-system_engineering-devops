@@ -8,19 +8,18 @@ sudo ufw allow 'Nginx HTTP'
 sudo mkdir -p /var/www/html
 sudo chmod -R 755 /var/www
 
+# Create the index page
+echo 'Hello World!' |sudo tee  /var/www/html/index.html
 
-# code to redirect a specific endpoint (eg: redirect /redirect_me to https://www.https://www.youtube.com/watch?v=MAjD6iaMqXU)
-echo "Hello World!" | sudo tee /var/www/html/index.html
-string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.https://www.youtube.com/watch?v=MAjD6iaMqXU permanent;"
+# Configure redirect and add header
+string_for_replacement="server_name _;\n\tadd_header X-Served-By \$hostname;\n\trewrite ^\/redirect_me https:\/\/www.youtube.com/watch?v=MAjD6iaMqXU permanent;"
 sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
 
-# code to create error page and add a redirect for error 404
+# Configure and add a redirect for error 404
 echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
 string_for_replacement="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
 sudo sed -i "s/listen 80 default_server;/$string_for_replacement/" /etc/nginx/sites-enabled/default
 
-# Configure a custom HTTP response header
-sudo sed -i '/^\slocation.*/i \        add_header X-Served-By $hostname;' /etc/nginx/sites-enabled/default
 
 # shellcheck disable=SC2154
 
