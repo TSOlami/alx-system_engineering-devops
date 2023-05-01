@@ -4,10 +4,12 @@
 # Install your Nginx server
 sudo apt-get -y update
 sudo apt-get install -y nginx
+sudo ufw allow 'Nginx HTTP'
+sudo mkdir -p /var/www/html
+sudo chmod -R 755 /var/www
 
-mkdir -p /var/www/html
 
-# code to redirect a specific endpoint (eg: redirect /redirect_me to https://www.https://www.youtube.com/watch?v=MAjD6iaMqXU.com)
+# code to redirect a specific endpoint (eg: redirect /redirect_me to https://www.https://www.youtube.com/watch?v=MAjD6iaMqXU)
 echo "Hello World!" | sudo tee /var/www/html/index.html
 string_for_replacement="server_name _;\n\trewrite ^\/redirect_me https:\/\/www.https://www.youtube.com/watch?v=MAjD6iaMqXU permanent;"
 sudo sed -i "s/server_name _;/$string_for_replacement/" /etc/nginx/sites-enabled/default
