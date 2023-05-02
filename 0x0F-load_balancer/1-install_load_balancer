@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Install and configure HAProxy load balancer on your lb-01 server.
 sudo apt-get update 
 sudo apt-get install --no-install-recommends software-properties-common
