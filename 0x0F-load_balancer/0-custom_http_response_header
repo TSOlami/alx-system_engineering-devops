@@ -11,7 +11,7 @@ sudo chmod -R 755 /var/www
 # Create the index page
 echo 'Hello World!' |sudo tee  /var/www/html/index.html
 
-# Configure a webpage for error 404
+# Configure an error 404 webpage
 echo "Ceci n'est pas une page" |sudo tee /var/www/html/404.html
 
 # code to configure redirect for a single page(/redirect_me) and add header to display hostname
