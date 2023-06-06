@@ -11,6 +11,8 @@ import requests
 
 
 after = None
+
+
 def recurse(subreddit, hot_list=[]):
     """
     If not a valid subreddit, return 0.
@@ -23,7 +25,11 @@ def recurse(subreddit, hot_list=[]):
     url = 'https://www.reddit.com/r/{}/hot.json'.format(subreddit)
     global after
     params = {'after': after}
-    response = requests.get(url, headers=user_agent, params=params, allow_redirects=False)
+    response = requests.get(
+        url,
+        headers=user_agent,
+        params=params,
+        allow_redirects=False)
     r = response.json()
 
     if response.status_code == 200:
