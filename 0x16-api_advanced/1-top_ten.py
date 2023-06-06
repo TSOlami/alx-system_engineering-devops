@@ -15,7 +15,7 @@ def top_ten(subreddit):
     If not a valid subreddit, return 0.
     """
     if subreddit is None or not isinstance(subreddit, str):
-        return 0
+        print("None")
 
     # Set user agent and url
     user_agent = {'User-agent': 'Google Chrome Version 114.0.5735.90'}
