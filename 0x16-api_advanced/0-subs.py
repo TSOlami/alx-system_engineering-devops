@@ -14,12 +14,13 @@ def number_of_subscribers(subreddit):
     """
     If not a valid subreddit, return 0.
     """
+    if subreddit is None or not isinstance(subreddit, str):
+        return 0
 
     # Set user agent and url
-    user_agent = 'Google Chrome Version 114.0.5735.90',
-    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit),
-    headers = {'User-Agent': user_agent},
-    response = requests.get(url, headers=headers, allow_redirects=False)
+    user_agent = {'User-agent': 'Google Chrome Version 114.0.5735.90'}
+    url = 'https://www.reddit.com/r/{}/about.json'.format(subreddit)
+    response = requests.get(url, headers=user_agent, allow_redirects=False)
     r = response.json()
 
     try:
