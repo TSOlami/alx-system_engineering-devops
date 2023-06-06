@@ -16,6 +16,7 @@ def top_ten(subreddit):
     """
     if subreddit is None or not isinstance(subreddit, str):
         print("None")
+        return
 
     # Set user agent and url
     user_agent = {'User-agent': 'Google Chrome Version 114.0.5735.90'}
@@ -31,3 +32,4 @@ def top_ten(subreddit):
 
     except Exception:
         print("None")
+        return
