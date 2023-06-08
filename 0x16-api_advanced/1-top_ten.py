@@ -7,29 +7,37 @@ If an invalid subreddit is given,
 the function will return 0.
 """
 
-import requests
-
 
 def top_ten(subreddit):
     """
-    If not a valid subreddit, return 0.
+    Prints the titles of the first 10 hot posts listed for a given subreddit
     """
-    if subreddit is None or not isinstance(subreddit, str):
-        print("None")
-        return
+    from requests import get
 
-    # Set user agent and url
-    user_agent = {'User-agent': 'Google Chrome Version 114.0.5735.90'}
-    url = 'https://www.reddit.com/r/{}/hot.json'.format(subreddit)
-    params = {'limit': 10}
-    response = requests.get(url, headers=user_agent, allow_redirects=False)
-    r = response.json()
+    url = "https://www.reddit.com/r/{}/hot/.json?limit=10".format(subreddit)
+
+    headers = {'user-agent': 'my-app/0.0.1'}
+
+    r = get(url, headers=headers, allow_redirects=False)
+
+    if r.status_code != 200:
+        print(None)
+        return None
 
     try:
-        result = r.get('data').get('children')
-        for i in result:
-            print(i.get('data').get('title'))
+        js = r.json()
 
-    except Exception:
-        print("None")
-        return
+    except ValueError:
+        print(None)
+        return None
+
+    try:
+
+        data = js.get("data")
+        children = data.get("children")
+        for child in children[:10]:
+            post = child.get("data")
+            print(post.get("title"))
+
+    except:
+        print(None)
