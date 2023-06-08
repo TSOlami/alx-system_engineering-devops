@@ -6,37 +6,49 @@ for a given subreddit.
 If an invalid subreddit is given,
 the function will return 0.
 """
+from requests import get
 
-import requests
+REDDIT = "https://www.reddit.com/"
+HEADERS = {'user-agent': 'my-app/0.0.1'}
 
 
-def recurse(subreddit, hot_list=[], after=None):
+def recurse(subreddit, hot_list=[], after=""):
     """
-    If not a valid subreddit, return 0.
+    Returns a list containing the titles of all hot articles for a given
+    subreddit. If no results are found for the given subreddit, the function
+    should return None.
     """
-    if subreddit is None or not isinstance(subreddit, str):
-        print("None")
-        return
-
-    # Set user agent and url
-    user_agent = {'User-agent': 'Google Chrome Version 114.0.5735.90'}
-    url = 'https://www.reddit.com/r/{}/hot.json'.format(subreddit)
-    params = {'after': after}
-    response = requests.get(
-        url,
-        headers=user_agent,
-        params=params,
-        allow_redirects=False)
-    r = response.json()
-
-    if response.status_code == 200:
-        data = r["data"]["after"]
-        if data is not None:
-            after = data
-            recurse(subreddit, hot_list)
-        titles = r["data"]["children"]
-        for a_title in titles:
-            hot_list.append(a_title["data"]["title"])
+    if after is None:
         return hot_list
-    else:
+
+    url = REDDIT + "r/{}/hot/.json".format(subreddit)
+
+    params = {
+        'limit': 100,
+        'after': after
+    }
+
+    r = get(url, headers=HEADERS, params=params, allow_redirects=False)
+
+    if r.status_code != 200:
         return None
+
+    try:
+        js = r.json()
+
+    except ValueError:
+        return None
+
+    try:
+
+        data = js.get("data")
+        after = data.get("after")
+        children = data.get("children")
+        for child in children:
+            post = child.get("data")
+            hot_list.append(post.get("title"))
+
+    except:
+        return None
+
+    return recurse(subreddit, hot_list, after)
