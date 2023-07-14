@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
 # A Bash script that displays all active IPv4 IPs on the machine it’s executed on.
-# ifconfig is used to retrieve the network interface configuration.
-# grep -Eo "inet (addr:)?([0-9]*\.){3}[0-9]*" searches for lines containing "inet" followed by an IP address
-# cut -b 6- removes the "inet " prefix from each captured IP address
 
 ifconfig | grep -Eo "inet (addr:)?([0-9]*\.){3}[0-9]*" | cut -b 6-
